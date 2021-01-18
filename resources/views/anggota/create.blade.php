@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Laravel - SI Perpustakaan')
+@section('title', 'Anggota Perpustakaan')
 @section('content')
 
     <div class="container">
