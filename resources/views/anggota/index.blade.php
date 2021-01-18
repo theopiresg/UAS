@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Laravel - SI Perpustakaan')
+@section('title', 'Laravel - Perpustakaan')
 @section('content')
 
 <div class="container">
@@ -12,7 +12,8 @@
         </button>
     </div>
         @endif
-            <h1 class="display-6">Data Anggota</h1>
+            <center>
+            <h1 class="display-6">Data Anggota Perpustakaan</h1></center>
             <hr class="my-4">     
             <a href="anggota/create" class="btn btn-primary mb-1">
             Tambah Anggota</a>       
