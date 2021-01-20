@@ -21,4 +21,5 @@ Route::get('/', function () {
 
     Route::resource('buku','BukuController');
     Route::resource('kategori','KategoriController');
+    Route::resource('transaksi','TransaksiController');
 
