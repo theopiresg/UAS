@@ -38,7 +38,7 @@ class TransaksiController extends Controller
      */
     public function create()
     {
-        
+        return view('transaksi.pinjam');
     }
 
     /**
@@ -49,7 +49,25 @@ class TransaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(Anggota::where('id_anggota', $request->id_anggota)->count() > 0){
+            if(Buku::where('id_buku', $request->id_buku)->count() > 0){
+                $transaksi = new Transaksi;
+                $transaksi->id_anggota = $request->id_anggota;
+                $transaksi->id_buku = $request->id_buku;
+                if($request->type_transaksi == 'pinjam'){
+                $transaksi->tgl_pinjam = $request->tgl_pinjam;
+                $transaksi->tgl_kembali = null;
+                $transaksi->save();
+            return redirect('transaksi')->with('msg','Data Berhasil di Simpan');
+            }else{
+                $transaksi->tgl_kembali = $request->tgl_kembali;
+            }
+            }else{
+            return json_encode('Buku tidak ditemukan!');
+            }
+            }else{
+            return json_encode('Anggota tidak ditemukan');
+            }            
     }
 
     /**
@@ -60,7 +78,42 @@ class TransaksiController extends Controller
      */
     public function show($id)
     {
-        //
+        $pinjaman = DB::table('table_transaksi')
+            ->join('table_buku', 'table_buku.id_buku', '=', 'table_transaksi.id_buku')
+            ->join('table_anggota', 'table_anggota.id_anggota', '=', 'table_transaksi.id_anggota')
+            ->join('table_kategori', 'table_kategori.kategori', '=', 'table_buku.kategori')
+            ->select('table_transaksi.id','table_transaksi.id_anggota', 'table_anggota.nama_anggota',
+            'table_buku.id_buku', 'table_buku.judul_buku','table_buku.deskripsi',
+            'table_kategori.deskripsi as kategori','table_transaksi.tgl_pinjam',
+            'table_transaksi.tgl_kembali')
+            ->where('table_transaksi.id', '=', $id)->first();
+            return json_encode($pinjaman);
+            }
+
+            public function showBuku($id)
+            {
+                // $buku = Buku::where('id_buku', $id)->first();
+                if(Buku::where('id_buku', $id)->count() > 0){
+                $buku = DB::table('table_buku')
+                ->join('table_kategori', 'table_buku.kategori', '=', 'table_kategori.kategori')
+                ->select('table_buku.id_buku','table_buku.judul_buku', 'table_buku.deskripsi', 
+                'table_kategori.deskripsi as kategori', 'table_buku.cover_img')
+                ->where('table_buku.id_buku', '=', $id)
+                ->get();
+                return $buku;
+                }else{
+                return 'false';
+                }
+            }
+
+            public function getAnggota($id)
+            {
+                $anggota = Anggota::where('id_anggota', $id)->first();
+                if($anggota === null){
+                return 'false';
+                }else{
+                return $anggota;
+            }
     }
 
     /**
@@ -71,7 +124,17 @@ class TransaksiController extends Controller
      */
     public function edit($id)
     {
-        //
+        $pinjaman = DB::table('table_transaksi')
+            ->join('table_buku', 'table_buku.id_buku', '=', 'table_transaksi.id_buku')
+            ->join('table_anggota', 'table_anggota.id_anggota', '=', 'table_transaksi.id_anggota')
+            ->join('table_kategori', 'table_kategori.kategori', '=', 'table_buku.kategori')
+            ->select('table_transaksi.id','table_transaksi.id_anggota', 'table_anggota.nama_anggota',
+            'table_buku.id_buku', 'table_buku.judul_buku','table_buku.deskripsi',
+            'table_kategori.deskripsi as kategori','table_transaksi.tgl_pinjam',
+            'table_transaksi.tgl_kembali')
+            ->where('table_transaksi.id', '=', $id)->first();
+
+            return view('transaksi.kembali', compact('pinjaman'));
     }
 
     /**

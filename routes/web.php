@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/uas', function () {
     return view('index');
     });
 
@@ -22,4 +22,7 @@ Route::get('/', function () {
     Route::resource('buku','BukuController');
     Route::resource('kategori','KategoriController');
     Route::resource('transaksi','TransaksiController');
+        Route::get('transaksi/edit/{id}', 'TransaksiController@edit');
+        Route::get('transaksi/showBuku/{id}', 'TransaksiController@showBuku');
+        Route::get('transaksi/getAnggota/{id}', 'TransaksiController@getAnggota');
 
