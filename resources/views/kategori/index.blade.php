@@ -12,7 +12,8 @@
                     </button>
             </div>
         @endif
-        <h1 class="display-6">Kategori Buku Perpustakaan</h1>
+        <center>
+        <h1 class="display-6">Kategori Buku Perpustakaan</h1></center>
         <hr class="my-4">     
         <a href="kategori/create" class="btn btn-primary mb-1">
         Tambah Kategori Buku</a>       

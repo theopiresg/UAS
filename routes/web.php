@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/uas', function () {
+Route::get('/', function () {
     return view('index');
     });
 
@@ -25,4 +25,5 @@ Route::get('/uas', function () {
         Route::get('transaksi/edit/{id}', 'TransaksiController@edit');
         Route::get('transaksi/showBuku/{id}', 'TransaksiController@showBuku');
         Route::get('transaksi/getAnggota/{id}', 'TransaksiController@getAnggota');
+        Route::post('/transaksi/update/{id}', 'TransaksiController@update');
 

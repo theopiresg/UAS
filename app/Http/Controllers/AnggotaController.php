@@ -83,6 +83,6 @@ class AnggotaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //deletedaat
     }
 }

@@ -146,7 +146,10 @@ class TransaksiController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Transaksi::where('id',$id)
+        ->update(['tgl_kembali' => $request->tgl_kembali]);
+        
+        return redirect('transaksi')->with('msg','Buku Telah dikembalikan');
     }
 
     /**
